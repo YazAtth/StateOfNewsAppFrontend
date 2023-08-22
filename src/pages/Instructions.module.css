@@ -1,0 +1,48 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+
+
+.instructionsCard {
+    background-color: #b2c6ea;
+    margin: 1em;
+    padding: 1em;
+    border-radius: 1em;
+}
+
+.instructionsCardTitle {
+    margin-bottom: 0.2em;
+    @apply text-4xl font-semibold text-gray-700;
+}
+
+
+/* Mobile Screens */
+@media (max-width: 640px) {
+
+}
+
+
+/* Computer Screens */
+@media (min-width: 640px) {
+
+
+    .instructionsCardHolder {
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+        "one two"
+        "three four"
+        "five six";
+    }
+
+
+    .instructionsCard1 {
+        grid-area: one / one / two / two;
+    }
+
+    .instructionsCard2 {
+        grid-area: five / five / six / six;
+    }
+}
