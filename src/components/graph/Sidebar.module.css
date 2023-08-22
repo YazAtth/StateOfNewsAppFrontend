@@ -1,0 +1,72 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer keyframes {
+    @keyframes slideIn {
+        0% {
+            right: -100%;
+            opacity: 0;
+            visibility: hidden;
+        }
+        100% {
+            right: 0;
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+
+    @keyframes slideOut {
+        0% {
+            right: 0;
+            opacity: 1;
+            visibility: visible;
+        }
+        100% {
+            right: -100%;
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
+}
+
+.sidebarStyles {
+    box-shadow: 0 0 10px rgba(0,0,0,0.75);
+    clip-path: inset(0px 0px 0px -15px);
+
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+
+.sidebarOpen {
+    /* Slide in animation */
+    animation-name: slideIn;
+}
+
+.sidebarClosed {
+    /* Slide out animation */
+    animation-name: slideOut;
+}
+
+/* Computer Screens */
+@media (min-width: 640px) {
+
+    .sidebarStyles {
+
+        @apply w-[30vw];
+        animation-duration: 0.3s;
+
+    }
+
+
+}
+
+/* Mobile Screens */
+@media (max-width: 640px) {
+    .sidebarStyles {
+        @apply w-[95vw];
+        animation-duration: 0.2s;
+    }
+
+}

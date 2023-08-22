@@ -1,0 +1,51 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.nonActivePageStyle {
+    @apply text-gray-900
+}
+
+.nonActivePageStyle:hover {
+    @apply text-standardDark
+}
+
+
+/* Computer Screens */
+@media (min-width: 640px) {
+
+
+}
+
+
+/* Mobile Screens */
+@media (max-width: 640px) {
+    .nonActivePageStyle:hover {
+        @apply bg-gray-200
+    }
+
+    .activePageStyle {
+        color: white;
+        @apply bg-standardDark
+    }
+
+    .activePageStyle:hover {
+        color: white;
+    }
+}
+
+/* Computer Screens */
+@media (min-width: 640px) {
+    .nonActivePageStyle:hover {
+        @apply text-standard
+    }
+
+    .activePageStyle {
+        @apply text-standardDark
+    }
+
+    .activePageStyle:hover {
+        @apply text-standardDark
+
+    }
+}
