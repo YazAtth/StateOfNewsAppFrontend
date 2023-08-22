@@ -1,0 +1,58 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+
+.resourceCard {
+    border-radius: 1em;
+    background-color: white;
+    padding: 1em;
+    margin: 1em;
+    /*aspect-ratio: 1;*/
+
+    display: flex;
+    flex-direction: column;
+
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+}
+
+.resourceCardImage {
+    /*background-color: red;*/
+    margin-top: auto;
+}
+
+.resourceCard img {
+    max-height: 15em;
+    border-radius: 1em;
+
+    /*position: absolute;*/
+    /*bottom: 0;*/
+}
+
+.resourceCard h2 {
+    margin: 0.1em 0 0.5em 0;
+}
+
+
+
+
+/* Mobile Screens */
+@media (max-width: 480px) {
+    .resourceCardHolder {
+        display: grid;
+        /*grid-template-rows: 1fr 1fr;*/
+        grid-template-columns: 1fr;
+    }
+
+}
+/* Computer Screens */
+@media (min-width: 640px) {
+
+    .resourceCardHolder {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+
+}

@@ -20,7 +20,8 @@ export default {
       },
       backgroundColor: {
         standard: "#60A5FA",
-        standardDark: "#5693de"
+        standardDark: "#5693de",
+        lightBlueCard: "#b2c6ea"
       },
       colors: {
         standardBlue: "#60A5FA",
