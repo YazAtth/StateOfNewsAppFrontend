@@ -19,13 +19,10 @@ export function Footer() {
           </div>
           <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-2">
             <div>
-              <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">Resources</h2>
+              <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">Powered By</h2>
               <ul className="text-gray-600 font-medium">
                 <li className="mb-4">
                   <a href="https://aws.amazon.com" className="hover:underline text-standardDark">Amazon Web Services</a>
-                </li>
-                <li className="mb-4">
-                  <a href="https://www.jetbrains.com/webstorm/" className="hover:underline text-standardDark">WebStorm</a>
                 </li>
                 <li className="mb-4">
                   <a href="https://www.mongodb.com/" className="hover:underline text-standardDark">MongoDB</a>
