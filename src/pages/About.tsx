@@ -46,7 +46,7 @@ export function About() {
             <div className={`${styles.githubLinkCardHolder}`}>
 
 
-              <a href="#">
+              <a href="https://github.com/YazAtth/StateOfNewsAppFrontend">
                 <div className={`${styles.githubLinkCard}`}>
                   <h2 className={"text-3xl text-gray-700 font-semibold text-center"}>Front-End Website Source Code</h2>
                   <div className={`${styles.githubLinkCardImage}`}>
@@ -62,7 +62,7 @@ export function About() {
               </a>
 
 
-              <a href="#">
+              <a href="https://github.com/YazAtth/HeadlineKeywordGenerator">
                 <div className={`${styles.githubLinkCard}`}>
                   <h2 className={"text-3xl text-gray-700 font-semibold text-center"}>Headline Keyword Generator Source Code</h2>
                   <div className={`${styles.githubLinkCardImage}`}>
