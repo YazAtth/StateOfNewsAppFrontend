@@ -9,3 +9,4 @@ export { default as tailwindCssLogo } from "./Tailwind_CSS_Logo.svg.png"
 export { default as viteJsLogo } from "./Vitejs-logo.svg.png"
 export { default as typescriptLogo } from "./Typescript_logo_2020.svg.png"
 
+export { default as architectureDiagram } from "./StateOfNewsAppArchitecture.drawio.png"

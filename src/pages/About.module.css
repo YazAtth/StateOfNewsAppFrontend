@@ -1,0 +1,79 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.divider {
+    height:1px;
+    border-width:0;
+    background-color:gray;
+
+    margin: 0.5em 1em 2em 1em;
+}
+
+.page {
+    display: none;
+}
+
+.fullscreen-overlay {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+}
+
+.githubLinkCard {
+    background-color: white;
+    border-radius: 1em;
+
+    box-shadow: rgba(0, 0, 0, 0.04) 0 3px 5px;
+
+    display: grid;
+    grid-template-rows: 1fr 3fr;
+
+    height: 90%;
+}
+
+.githubLinkCard:hover {
+    @apply bg-blue-200;
+}
+
+
+.githubLinkCardImage {
+    display: flex;
+    flex-direction: column;
+}
+
+.githubLogoSvg {
+    margin-top: auto;
+}
+
+
+
+/* Mobile Screens */
+@media (max-width: 640px) {
+
+    .githubLinkCardHolder {
+        /*margin: 0 0em;*/
+    }
+
+    .githubLinkCard {
+        margin: 1em 0;
+        padding: 1em;
+    }
+}
+
+
+/* Computer Screens */
+@media (min-width: 640px) {
+
+    .githubLinkCardHolder {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .githubLinkCard {
+        margin: 1em;
+        padding: 1em;
+    }
+
+}
