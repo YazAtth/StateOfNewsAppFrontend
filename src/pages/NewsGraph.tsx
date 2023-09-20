@@ -27,11 +27,14 @@ export function NewsGraph() {
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://47cg4jbqf6lnnjglgfroehwzmm0yglri.lambda-url.us-east-1.on.aws/?requestType=getGraph");
+        const graph_uri: string = "http://localhost:8080/graph-data/"
+        console.log(graph_uri)
+        const response = await fetch(graph_uri);
         const jsonData = await response.json();
+        // console.log(`Output: ${JSON.stringify(jsonData, null, 4)}`)
 
-        setGraph(jsonData.graph);
-        console.log(graph)
+        setGraph(jsonData);
+        // console.log(graph)
       } catch (error) {
         console.error("Error fetching data: ", error)
       }
