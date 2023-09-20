@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import 'tailwindcss/tailwind.css';
-import JunctionTableApiResponse, {SimilarArticle} from "../../types/JunctionTableApiResponse.tsx";
+import {SimilarArticle} from "../../types/JunctionTableApiResponse.tsx";
 import ArticleCard from "./ArticleCard.tsx";
 
 interface Prop {
