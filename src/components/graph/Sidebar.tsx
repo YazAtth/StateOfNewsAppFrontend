@@ -25,11 +25,11 @@ export default function Navbar({ isOpen, toggleOpen, selectedNode, isSidebarLoad
     const fetchDataFromApi = async () => {
       if (isSidebarLoading) {
         try {
-          const keywordToArticleIdHashUri = "localhost:8080/keywords-to_article_id_hash/"
-          const response = await fetch(`http://localhost:8080/keywords-to_article_id_hash/?keyword=${selectedNodeLabel}`);
+          const keywordToArticleIdHashUri = `http://localhost:8080/get-articles-from-keyword/?keyword=${selectedNodeLabel}`
+          const response = await fetch(keywordToArticleIdHashUri);
           const jsonData: JunctionTableApiResponse = await response.json();
 
-          console.log(jsonData)
+          // console.log(jsonData)
 
           if (jsonData.similarArticleList) {
             setSidebarData(jsonData)
