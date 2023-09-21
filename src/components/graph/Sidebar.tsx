@@ -28,7 +28,7 @@ export default function Navbar({ isOpen, toggleOpen, selectedNode, isSidebarLoad
     const fetchDataFromApi = async () => {
       if (isSidebarLoading) {
         try {
-          const keywordToArticleIdHashUri = `http://localhost:8080/get-articles-from-keyword/?keyword=${selectedNodeLabel}`
+          const keywordToArticleIdHashUri = `http://ec2-54-227-11-42.compute-1.amazonaws.com:8080/get-articles-from-keyword/?keyword=${selectedNodeLabel}`
           const response = await fetch(keywordToArticleIdHashUri);
           const jsonData: SimilarArticle[] = await response.json();
 

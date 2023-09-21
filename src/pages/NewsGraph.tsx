@@ -27,7 +27,7 @@ export function NewsGraph() {
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const graph_uri: string = "http://localhost:8080/graph-data/"
+        const graph_uri = "http://ec2-54-227-11-42.compute-1.amazonaws.com:8080/graph-data/"
         console.log(graph_uri)
         const response = await fetch(graph_uri);
         const jsonData = await response.json();
