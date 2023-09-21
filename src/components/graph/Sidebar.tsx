@@ -28,8 +28,10 @@ export default function Navbar({ isOpen, toggleOpen, selectedNode, isSidebarLoad
     const fetchDataFromApi = async () => {
       if (isSidebarLoading) {
         try {
-          const keywordToArticleIdHashUri = `http://ec2-54-227-11-42.compute-1.amazonaws.com:8080/get-articles-from-keyword/?keyword=${selectedNodeLabel}`
-          const response = await fetch(keywordToArticleIdHashUri);
+          const keywordToArticleIdHashUri = `https://szk3n9o1m7.execute-api.us-east-1.amazonaws.com/dev/get-articles-from-keyword/?keyword=${selectedNodeLabel}`
+          const headers = { 'authorizationToken': `${import.meta.env.AUTHORIZATION_KEY}` }; // auth header with bearer token
+
+          const response = await fetch(keywordToArticleIdHashUri, { headers });
           const jsonData: SimilarArticle[] = await response.json();
 
           console.log(jsonData)
