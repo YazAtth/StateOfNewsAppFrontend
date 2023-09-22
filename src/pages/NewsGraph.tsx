@@ -28,6 +28,7 @@ export function NewsGraph() {
     const fetchData = async () => {
       try {
         const graph_uri = `${import.meta.env.VITE_API_DOMAIN}/graph-data/`
+        console.log(graph_uri)
         const headers = { 'authorizationToken': `${import.meta.env.VITE_API_AUTH_TOKEN}` }; // auth header with bearer token
         const response = await fetch(graph_uri, { headers });
         const jsonData = await response.json();
