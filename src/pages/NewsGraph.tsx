@@ -27,15 +27,9 @@ export function NewsGraph() {
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const graph_uri = "https://szk3n9o1m7.execute-api.us-east-1.amazonaws.com/dev/graph-data"
-        // const headers = { 'authorizationToken': `${import.meta.env.AUTHORIZATION_KEY}` }; // auth header with bearer token
-        // const headers = { 'authorizationToken': `abc123` }; // auth header with bearer token
-
-        console.log(graph_uri)
-        // const response = await fetch(graph_uri, { headers } );
-        const response = await fetch(graph_uri, {method: "GET", mode: "cors"});
-        console.log(response)
-
+        const graph_uri = `${import.meta.env.VITE_API_DOMAIN}/graph-data/`
+        const headers = { 'authorizationToken': `${import.meta.env.VITE_API_AUTH_TOKEN}` }; // auth header with bearer token
+        const response = await fetch(graph_uri, { headers });
         const jsonData = await response.json();
         // console.log(`Output: ${JSON.stringify(jsonData, null, 4)}`)
 
