@@ -3,74 +3,10 @@ import * as React from 'react';
 import Navbar from "../components/layout/Navbar.tsx";
 import {useEffect, useState} from "react";
 import Table from "../components/configuration/Table.tsx";
+import styles from "./Configuration.module.css"
 
-// type Props = {
-//
-// };
 
 export function Configuration() {
-
-  const stopWordArray = ["day",
-    "days",
-    "week",
-    "weeks",
-    "month",
-    "months",
-    "year",
-    "years",
-    "video",
-    "way",
-    "pictures",
-    "year",
-    "month",
-    "week",
-    "podcast",
-    "new",
-    "new",
-    "co",
-    "my",
-    "out",
-    "images",
-    "says",
-    "rise",
-    "call",
-    "child",
-    "children",
-    "man",
-    "men",
-    "woman",
-    "women",
-    "people",
-    "person",
-    "sex",
-    "rape",
-    "sexual",
-    "options",
-    "use",
-    "live",
-    "case",
-    "year",
-    "group",
-    "finds",
-    "place",
-    "report",
-    "lives",
-    "area",
-    "news",
-    "rules",
-    "former",
-    "start",
-    "world",
-    "house",
-    "plan",
-    "plans",
-    "BBC",
-    "apple",
-    "pear",
-    "peach",
-    "orange"]
-
-
 
   const [stopWords, setStopWords] = useState<string[]>([])
   const [newStopWords, setNewStopWords] = useState<string[]>([])
@@ -133,8 +69,6 @@ export function Configuration() {
 
     setNewItem("");
 
-
-
   }
 
   return (
@@ -154,10 +88,10 @@ export function Configuration() {
                 placeholder="Enter item"
                 value={newItem}
                 onChange={(e) => setNewItem(e.target.value)}
+                className={`${styles.textBox} w-full`}
             />
             <button onClick={() => addItem(newItem)}>Add Item</button>
 
-            {/*<Table items={newStopWords} setItems={setNewStopWords}/>*/}
             <Table items={stopWords} setItems={setStopWords} title={"Stop Words"} setFlashMessage={setFlashMessage}/>
 
           </div>
