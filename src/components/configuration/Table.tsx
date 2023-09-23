@@ -4,26 +4,49 @@ import {useState} from "react";
 
 interface Props {
   items: string[]
-  setItems: React.Dispatch<React.SetStateAction<string[]>>; // Add the setter prop
+  setItems: React.Dispatch<React.SetStateAction<string[]>> // Add the setter prop
+  title: string
+  flashMessage?: string
+  setFlashMessage: React.Dispatch<React.SetStateAction<string>>
 }
 
 export default function Table(props: Props) {
 
-  const { items, setItems } = props
+  const { items, setItems, title, setFlashMessage } = props
 
-  const removeItem = (itemToRemove: string) => {
-    setItems((prevStopWords) => {
-      const updatedItems: string[] = prevStopWords.filter((item) => item !== itemToRemove);
-      return updatedItems; // Return the new state value
-    });
-  };
+  async function removeItem(itemToRemove: string) {
+
+    try {
+      const endpoint = `${import.meta.env.VITE_API_DOMAIN}/stop-words?stop-word-to-delete=${itemToRemove}`
+      const headers = {'authorizationToken': `${import.meta.env.VITE_API_AUTH_TOKEN}`,}; // auth header with bearer token
+      const response = await fetch(endpoint, {
+            method: "DELETE",
+            headers,
+          });
+
+      // If item can be deleted on the db we delete our local copy
+      if (response.ok) {
+        // console.log("Ran this")
+        setItems( (prevStopWords) => {
+          return prevStopWords.filter((item) => item !== itemToRemove);
+        });
+      }
+
+      // console.log(items)
+      setFlashMessage(`Successfully deleted item \"${itemToRemove}\"`)
+
+    } catch (error) {
+      console.error("Error fetching data: ", error)
+      setFlashMessage(`Failed to delete item \"${itemToRemove}\"`)
+    }
+  }
 
   return (
     <>
       <div className="stop-words-table mb-4">
         <table className={`w-full`}>
           <tr>
-            <th>Stop Words</th>
+            <th>{title}</th>
             <th></th>
           </tr>
           {items.map((stopWord, index) => {
