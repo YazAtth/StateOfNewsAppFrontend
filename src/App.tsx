@@ -10,6 +10,7 @@ import {NewsGraph} from "./pages/NewsGraph.tsx";
 import Resources from "./pages/Resources.tsx";
 import { Helmet } from 'react-helmet';
 import {Test} from "./pages/Test.tsx";
+import {Configuration} from "./pages/Configuration.tsx";
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
               <Route path="/resources" element={<Resources/>}/>
               <Route path="/about" element={<About/>}/>
               <Route path="/test" element={<Test/>}/>
+              <Route path="/configuration" element={<Configuration/>}/>
 
               <Route path="*" element={<Custom404/>}/>
             </Routes>

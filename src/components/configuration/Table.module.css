@@ -1,0 +1,12 @@
+
+
+
+/* Style for even rows */
+.evenRow {
+    background-color: #efefef; /* Light gray background color */
+}
+
+/* Style for odd rows */
+.oddRow {
+    background-color: #ffffff; /* White background color */
+}
