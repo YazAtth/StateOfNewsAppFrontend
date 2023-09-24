@@ -12,22 +12,66 @@ export function Configuration() {
   const [newStopWords, setNewStopWords] = useState<string[]>([])
   const [newItem, setNewItem] = useState("");
   const [flashMessage, setFlashMessage] = useState("")
+  const [authToken, setAuthToken] = useState("")
+  const [buttonLabel, setButtonLabel] = useState({
+    authenticateButton: "Authenticate",
+    addItemButton: "Add Item"
+  })
 
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const endpoint = `${import.meta.env.VITE_API_DOMAIN}/stop-words`
-        const headers = {'authorizationToken': `${import.meta.env.VITE_API_AUTH_TOKEN}`}; // auth header with bearer token
-        const response = await (await fetch(endpoint, {headers})).json();
+  // useEffect(() => {
+  //   async function fetchData() {
+  //
+  //     console.log(stopWords)
+  //
+  //     const endpoint = `${import.meta.env.VITE_API_DOMAIN}/stop-words`
+  //     // const headers = {'authorizationToken': `${import.meta.env.VITE_API_AUTH_TOKEN}`}; // auth header with bearer token
+  //     const headers = {'authorizationToken': `${authToken}`}; // auth header with bearer token
+  //     const response = await fetch(endpoint, {headers});
+  //
+  //     if (response.status == 200) {
+  //       const responseBody = await response.json()
+  //       setStopWords(responseBody)
+  //     } else {
+  //       setStopWords([])
+  //     }
+  //
+  //   }
+  //   fetchData();
+  // }, [authToken])
 
-        setStopWords(response)
-      } catch (error) {
-        console.error("Error fetching data: ", error)
-      }
+  async function fetchData() {
+
+
+    setButtonLabel(prevState => ({
+      ...prevState,
+      authenticateButton: "Loading..."
+    }))
+
+    const endpoint = `${import.meta.env.VITE_API_DOMAIN}/stop-words`
+    // const headers = {'authorizationToken': `${import.meta.env.VITE_API_AUTH_TOKEN}`}; // auth header with bearer token
+    const headers = {'authorizationToken': `${authToken}`}; // auth header with bearer token
+    const response = await fetch(endpoint, {headers});
+
+
+    if (response.status == 200) {
+      const responseBody = await response.json()
+      setStopWords(responseBody)
+      setButtonLabel(prevState => ({
+        ...prevState,
+        authenticateButton: "Authenticate"
+      }))
+    } else {
+      setStopWords([])
+      setButtonLabel(prevState => ({
+        ...prevState,
+        authenticateButton: "Authenticate"
+      }))
     }
-    fetchData();
-  }, [])
+
+  }
+
+
 
 
 
@@ -48,23 +92,38 @@ export function Configuration() {
     }
 
     try {
-      const endpoint = `${import.meta.env.VITE_API_DOMAIN}/stop-words`
-      const headers = {'authorizationToken': `${import.meta.env.VITE_API_AUTH_TOKEN}`}; // auth header with bearer token
+      setButtonLabel(prevState => ({
+        ...prevState,
+        addItemButton: "Loading..."
+      }))
 
-      const response = await (
-          await fetch(endpoint, {
+      const endpoint = `${import.meta.env.VITE_API_DOMAIN}/stop-words`
+      // const headers = {'authorizationToken': `${import.meta.env.VITE_API_AUTH_TOKEN}`}; // auth header with bearer token
+      const headers = {'authorizationToken': `${authToken}`}; // auth header with bearer token
+
+
+      const response = await fetch(endpoint, {
             method: "POST",
             headers,
             body: JSON.stringify([newItem])
-          })
-      ).json();
+          });
 
-      setStopWords([...stopWords, newItem]);
-      setNewStopWords([...newStopWords, newItem]);
-      setFlashMessage(`Added item \"${newItem}\"`)
+
+      if (response.ok) {
+        setStopWords([...stopWords, newItem]);
+        setNewStopWords([...newStopWords, newItem]);
+        setFlashMessage(`Added item "${newItem}"`);
+      } else {
+        setFlashMessage(`Failed to add item "${newItem}`);
+      }
     } catch (error) {
       console.error("Error fetching data: ", error)
-      setFlashMessage(`Failed to add item \"${newItem}\"`)
+      setFlashMessage(`Failed to add item "${newItem}"`)
+    } finally {
+      setButtonLabel(prevState => ({
+        ...prevState,
+        addItemButton: "Add Item"
+      }))
     }
 
     setNewItem("");
@@ -82,6 +141,16 @@ export function Configuration() {
               <h1 className={"font-semibold text-gray-700 text-5xl"}>Configuration</h1>
             </div>
 
+            <input
+              type="text"
+              placeholder="Enter Auth Token"
+              value={authToken}
+              onChange={(e) => setAuthToken(e.target.value)}
+              className={`${styles.textBox} w-full`}
+            />
+
+            <button onClick={() => fetchData()}>{buttonLabel.authenticateButton}</button>
+
             <p>{flashMessage}</p>
             <input
                 type="text"
@@ -90,9 +159,15 @@ export function Configuration() {
                 onChange={(e) => setNewItem(e.target.value)}
                 className={`${styles.textBox} w-full`}
             />
-            <button onClick={() => addItem(newItem)}>Add Item</button>
+            <button onClick={() => addItem(newItem)}>{buttonLabel.addItemButton}</button>
 
-            <Table items={stopWords} setItems={setStopWords} title={"Stop Words"} setFlashMessage={setFlashMessage}/>
+            <Table
+              items={stopWords}
+              setItems={setStopWords}
+              title={"Stop Words"}
+              setFlashMessage={setFlashMessage}
+              authToken={authToken}
+            />
 
           </div>
         </div>

@@ -8,17 +8,26 @@ interface Props {
   title: string
   flashMessage?: string
   setFlashMessage: React.Dispatch<React.SetStateAction<string>>
+  authToken: string
 }
 
 export default function Table(props: Props) {
 
-  const { items, setItems, title, setFlashMessage } = props
+  const {
+    items,
+    setItems,
+    title,
+    setFlashMessage,
+    authToken
+  } = props
 
   async function removeItem(itemToRemove: string) {
 
     try {
       const endpoint = `${import.meta.env.VITE_API_DOMAIN}/stop-words?stop-word-to-delete=${itemToRemove}`
-      const headers = {'authorizationToken': `${import.meta.env.VITE_API_AUTH_TOKEN}`,}; // auth header with bearer token
+      // const headers = {'authorizationToken': `${import.meta.env.VITE_API_AUTH_TOKEN}`,}; // auth header with bearer token
+      const headers = {'authorizationToken': `${authToken}`}; // auth header with bearer token
+
       const response = await fetch(endpoint, {
             method: "DELETE",
             headers,
@@ -33,11 +42,11 @@ export default function Table(props: Props) {
       }
 
       // console.log(items)
-      setFlashMessage(`Successfully deleted item \"${itemToRemove}\"`)
+      setFlashMessage(`Successfully deleted item "${itemToRemove}"`)
 
     } catch (error) {
       console.error("Error fetching data: ", error)
-      setFlashMessage(`Failed to delete item \"${itemToRemove}\"`)
+      setFlashMessage(`Failed to delete item "${itemToRemove}"`)
     }
   }
 
