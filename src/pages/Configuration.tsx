@@ -99,7 +99,7 @@ export function Configuration() {
 
       const endpoint = `${import.meta.env.VITE_API_DOMAIN}/stop-words`
       // const headers = {'authorizationToken': `${import.meta.env.VITE_API_AUTH_TOKEN}`}; // auth header with bearer token
-      const headers = {'authorizationToken': `${authToken}`}; // auth header with bearer token
+      const headers = {'authorizationToken': `${authToken}`, 'Content-Type':'application/json'}; // auth header with bearer token
 
 
       const response = await fetch(endpoint, {
@@ -115,6 +115,7 @@ export function Configuration() {
         setFlashMessage(`Added item "${newItem}"`);
       } else {
         setFlashMessage(`Failed to add item "${newItem}`);
+        console.log(response.status)
       }
     } catch (error) {
       console.error("Error fetching data: ", error)
