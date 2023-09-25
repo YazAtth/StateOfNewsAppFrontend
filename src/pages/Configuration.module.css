@@ -4,3 +4,11 @@
     margin: 1em 0;
     padding: 1em;
 }
+
+.divider {
+    height:1px;
+    border-width:0;
+    background-color:gray;
+
+    margin: 0.5em 1em 2em 1em;
+}
