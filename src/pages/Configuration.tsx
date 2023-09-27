@@ -15,10 +15,10 @@ export function Configuration() {
   const [authToken, setAuthToken] = useState("");
   const [buttonLabel, setButtonLabel] = useState({
     authenticateButton: "Authenticate",
-    addItemButton: "Add Item"
+    addItemButton: "Add Item",
+    runAlgorithmButton: "Run Algorithm"
   });
-
-  const [lastUpdated, setLastUpdated]= useState("");
+  const [algorithmLastInvocation, setAlgorithmLastInvocation] = useState("N/A")
 
 
   // useEffect(() => {
@@ -42,6 +42,7 @@ export function Configuration() {
   //   fetchData();
   // }, [authToken])
 
+  // When the authenticate button is clicked
   async function fetchData() {
 
 
@@ -70,7 +71,7 @@ export function Configuration() {
 
     if (response.status == 200) {
       const responseBody = await response.json();
-      setLastUpdated(responseBody)
+      setAlgorithmLastInvocation(responseBody.lastModified)
     }
 
 
@@ -143,6 +144,22 @@ export function Configuration() {
 
   }
 
+  async function runAlgorithm() {
+    setButtonLabel(prevState => ({
+      ...prevState,
+      runAlgorithmButton: "Loading..."
+    }))
+
+    const endpoint = `${import.meta.env.VITE_API_DOMAIN}/stop-words`
+    const headers = {'authorizationToken': `${authToken}`}; // auth header with bearer token
+    const response = await fetch(endpoint, {headers});
+
+    setButtonLabel(prevState => ({
+      ...prevState,
+      runAlgorithmButton: "Run Algorithm"
+    }))
+  }
+
   return (
       <>
         <Navbar activePage={"configuration"}/>
@@ -169,7 +186,8 @@ export function Configuration() {
 
             <hr className={`${styles.divider} mt-5`}/>
 
-
+            <p><b>Last Modified:</b> {algorithmLastInvocation}</p>
+            <button onClick={() => runAlgorithm()}>{buttonLabel.runAlgorithmButton}</button>
 
             <hr className={`${styles.divider} mt-5`}/>
 
