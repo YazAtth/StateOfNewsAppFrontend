@@ -3,10 +3,11 @@ import * as React from 'react';
 import Navbar from "../components/layout/Navbar.tsx";
 import Sidebar from "../components/graph/Sidebar.tsx"
 import Graph from "react-graph-vis";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import GraphVisNode from "../components/graph/GraphVisNode.ts";
 import LoadingBar from "../components/util/LoadingBar.tsx";
-
+import { v4 as uuidv4 } from 'uuid';
+import {Simulate} from "react-dom/test-utils";
 
 
 interface graphData {
@@ -23,6 +24,8 @@ export function NewsGraph() {
 
 
   const [graph, setGraph] = useState<graphData>()
+  const [fullGraph, setFullGraph] = useState<graphData>();
+
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +37,7 @@ export function NewsGraph() {
         // console.log(`Output: ${JSON.stringify(jsonData, null, 4)}`)
 
         setGraph(jsonData);
+        setFullGraph(jsonData);
         // console.log(graph)
       } catch (error) {
         console.error("Error fetching data: ", error)
@@ -115,10 +119,17 @@ export function NewsGraph() {
   const [selectedNode, setSelectedNode] = useState<GraphVisNode>();
   const [isSidebarLoading, setIsSidebarLoading] = useState<boolean>(false)
   const [selectedNodeLabel, setSelectedNodeLabel] = useState<string>("");
+  const [isGraphFiltered, setIsGraphFiltered] = useState(false);
 
 
 
   const toggleOpen = () => {
+    if (isOpen) {
+      console.log("Graph reset")
+      setGraph(fullGraph);
+      setIsGraphFiltered(false);
+    }
+
     setIsOpen(!isOpen);
   }
 
@@ -126,6 +137,31 @@ export function NewsGraph() {
     setIsSidebarLoading(false);
   }
 
+  useEffect(() => {
+    if (graph && isSidebarLoading) {
+      setGraph({nodes: [], edges: []})
+    }
+
+    if (graph && fullGraph && selectedNode && !isSidebarLoading && isGraphFiltered) {
+      const adjacentNodes: number[] = [];
+
+      fullGraph.edges.forEach(edge => {
+        if (edge.to === selectedNode.id) {
+          adjacentNodes.push(edge.from);
+        } else if (edge.from === selectedNode.id) {
+          adjacentNodes.push(edge.to);
+        }
+      });
+
+      const filteredGraph = fullGraph?.nodes.filter(singleNode => adjacentNodes.includes(singleNode.id) || singleNode.id === selectedNode.id);
+      if (filteredGraph && filteredGraph.length > 0) {
+        setGraph(()  => ({
+          nodes: filteredGraph,
+          edges: fullGraph.edges || [] // Ensure edges are always defined
+        }));
+      }
+    }
+  }, [isGraphFiltered, isSidebarLoading]);
 
 
   const handleNodeClick = (event: any) => {
@@ -138,6 +174,7 @@ export function NewsGraph() {
       const nodeId = nodes[0];
       const node = graph.nodes.find((n) => n.id === nodeId);
       if (node) {
+        setIsGraphFiltered(true);
 
         setSelectedNode(node);
         setSelectedNodeLabel(node.label.toLowerCase());
@@ -168,6 +205,13 @@ export function NewsGraph() {
         {/*<div className={`right-0 absolute z-10 bg-blue-400 w-[20vw] h-full`}>*/}
         {/*  <p>Sidebar content</p>*/}
         {/*</div>*/}
+
+        {isSidebarLoading &&
+          <div className="pl-5 pr-5 pt-10 pb-5 flex items-center justify-center">
+            <LoadingBar/>
+          </div>
+        }
+
         <Sidebar isOpen={isOpen}
                  toggleOpen={toggleOpen}
                  selectedNode={selectedNode}
@@ -187,6 +231,7 @@ export function NewsGraph() {
             :
             <Graph
               graph={graph}
+              key={uuidv4()}
               options={optionsState}
               events={events}
               getNetwork={network => {

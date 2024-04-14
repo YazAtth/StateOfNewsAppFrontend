@@ -66,7 +66,9 @@ export default function Navbar({ isOpen, toggleOpen, selectedNode, isSidebarLoad
         >
           <div className="cursor-pointer pt-3 pl-2 pb-2 text-sm bg-blue-300">
             <button className="text-xl absolute right-4 z-20" onClick={() => toggleOpen()} style={{all: "unset"}}>
-              Close Sidebar [x]
+              <div className={`p-1 rounded-md hover:bg-blue-200 active:bg-blue-200 cursor-pointer`}>
+                Close Sidebar [x]
+              </div>
             </button>
           </div>
 
